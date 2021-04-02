@@ -77,7 +77,18 @@ function draw () {
     text("Vedic Sharma", windowWidth - 187, 80);
     fill(200);
     textSize(35);
+    // Real R symbol:
     text("\u211D", offsetX - 20, offsetY + 80);
+    // Numbers under ticks:
+    fill(100);
+    for (let i=-6; i<7; i+=2){
+        if (i < 0){
+            // More padding in order to centralize number:
+            text(i, windowWidth/2 - 22 + i*(windowWidth/20), offsetY + 50);
+        } else {
+            text(i, windowWidth/2 - 10 + i*(windowWidth/20), offsetY + 50);
+        }
+    }
 
     // Instructions rectangle:
     rect(windowWidth/2 - 350, 100, 700, 350, 20);
@@ -114,6 +125,12 @@ function draw () {
     noStroke();
     textAlign(LEFT);
 
+    // Ticks:
+    stroke(120);
+    for (let i=-7; i<8; i++){
+        line(windowWidth/2 + i*(windowWidth/20), offsetY+9, windowWidth/2 + i*(windowWidth/20), offsetY-9);
+    }
+
     // Real line:
     stroke(255);
     strokeWeight(2);
@@ -125,7 +142,8 @@ function draw () {
     line(offsetX, offsetY, offsetX - arrowSlope, offsetY - 0.7*arrowSlope);
     line(offsetX, offsetY, offsetX - arrowSlope, offsetY + 0.7*arrowSlope);
 
-    // Dashed line:
+
+    // Dashed line that appears during manual insertion:
     if (manualMode == true) {
         drawingContext.setLineDash([5, 15]);
         line(mouseX, 0, mouseX, windowHeight);
@@ -229,7 +247,6 @@ function distanceLine (x1, x2) {
 }
 
 function generateData(){
-    console.log("Called")
     gaussian_mean = windowWidth/2 + parseInt(mu)*(windowWidth/20);
     gaussian_stddev = parseInt(sigma)*(windowWidth/20);
     for (i = 0; i < parseInt(numContents); i++) {
